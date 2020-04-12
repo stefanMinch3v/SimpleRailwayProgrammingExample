@@ -1,6 +1,6 @@
 ﻿namespace RailwayProgrammingExample.Common
 {
-    using RailwayProgrammingExample.Models;
+    using Models;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -24,11 +24,11 @@
             return id;
         }
 
-        public static IEnumerable<User> GetAllUsers()
-            => fakeUsersDb.Select(kvp => kvp.Value);
+        public static IEnumerable<Maybe<User>> GetAllUsers()
+            => fakeUsersDb.Select(kvp => (Maybe<User>)kvp.Value);
 
         public static Maybe<User> GetUser(int id)
-            => GetAllUsers().FirstOrDefault(u => u.Id == id);
+            => GetAllUsers().FirstOrDefault(u => u.HasValue && u.Value.Id == id);
 
         public static Result DeleteUser(int id)
         {

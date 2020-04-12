@@ -26,7 +26,7 @@
 
 					if (operation.Contains("display"))
 					{
-						GetAllUsers();
+						PrintAllUsers();
 					}
 					else if (operation.Contains("create"))
 					{
@@ -39,7 +39,7 @@
 					else if (operation.Contains("search"))
 					{
 						var searchId = int.Parse(inputParsed[1]);
-						GetUser(searchId);
+						PrintUser(searchId);
 					}
 					else if (operation.Contains("delete"))
 					{
@@ -96,7 +96,7 @@
 			Console.WriteLine($"Created with id: {createdId}");
 		}
 
-		private static void GetUser(int id)
+		private static void PrintUser(int id)
 		{
 			var userOrNothing = Database.GetUser(id);
 			if (userOrNothing.HasNoValue)
@@ -105,14 +105,14 @@
 				return;
 			}
 
-			Console.WriteLine(userOrNothing.Value.ToString());
+			Console.WriteLine(userOrNothing.ToString());
 		}
 
-        private static void GetAllUsers()
+        private static void PrintAllUsers()
         {
 			var users = Database.GetAllUsers();
 			
-			var reducedUsers = users.Where(u => u != null);
+			var reducedUsers = users.Where(u => u.HasValue);
 			if (!reducedUsers.Any())
 			{
 				Console.WriteLine("No users found.");
